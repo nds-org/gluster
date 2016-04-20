@@ -4,7 +4,6 @@ Author/Maintainer:  raila@illinois.edu
 This image contains tooling for GlusterFS on NDSLabs clusters:
   ** glusterfs server
   ** glusterfs client
-  ** OpenStack CLI for openstack integration
 
 # Prerequisites
   ** A cluster of system with storage mounted - GlusterFS filesystem nodes
