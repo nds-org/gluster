@@ -1,0 +1,19 @@
+FROM debian:jessie
+
+RUN ( apt-get update ; \
+    apt-get upgrade -y ; \
+    apt-get -y install wget ;\
+    wget -O - http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.2/Debian/jessie/pub.key | apt-key add - ; \
+    echo deb http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.2/Debian/jessie/apt jessie main > /etc/apt/sources.list.d/gluster.list ; \
+    apt-get -y install glusterfs-server glusterfs-client ;\
+    apt-get -y install xfsprogs ;\
+    apt-get -y install lvm2 ;\
+    apt-get -y install python-pip ;\
+    apt-get -y install python-dev ;\
+    apt-get -y install supervisor ;\
+    apt-get -y clean all ; \
+    pip install ansible python-keystoneclient python-heatclient python-novaclient python-glanceclient shade ;\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
+    )
+
+ADD FILES.gluster /
