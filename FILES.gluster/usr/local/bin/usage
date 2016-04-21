@@ -1,0 +1,20 @@
+#!/bin/bash
+
+usage-docker() {
+    echo -n 'docker run --rm -it -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock --net=host ndslabs/developer-shell bash'
+}
+
+usage() {
+    echo "This image produces the command to run itself in the following environments:"
+    echo -n 'eval $(docker run --rm -t ndslabs/developer-shell usage docker)'
+    
+}
+
+case $1 in
+    "docker" )
+        usage-docker
+        ;;
+    *)
+        usage
+        ;;
+esac
