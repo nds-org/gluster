@@ -1,11 +1,25 @@
-# NDSLabs Cluster Filesystem Support via GlusterFS
-Author/Maintainer:  raila@illinois.edu
+# NDSLabs GlusterFS Cluster Filesystem Support 
+Tooling and support for GlusterFS servers and clients.
+##Supports:
+* container as client - mount in container
+* container as server - serve from container
+* host as client - mount in host via container
+* host as server - serve from host via container 
 
-This image contains tooling for GlusterFS on NDSLabs clusters:
-* glusterfs server
-* glusterfs client
+## Commands
+* **usage** - Consult this prior to use for instructions for you image - default command
+```
+docker run --rm -it ndslabs/gluster usage
+```
+* **server** - Serves a Consult usage or see below
+* **client** - Consult usage or see below
+*  
+* Author/Maintainer:  raila@illinois.edu
+```--cap-add SYS_ADMIN --device /dev/fuse
+```
 
-# Prerequisites
+
+## Prerequisites
 * A cluster of system with mountable storage - GlusterFS filesystem nodes
 * A cluster of client systems that will mount GlusterFS volumes that the storage cluster serves
 * A basic understanding of GlusterFS 
@@ -26,7 +40,7 @@ PV assignments: vdb1->HA, vdb2->scratch
 LVs and mounts:  /dev/mapper/HA-brick0:/var/glfs/HA/brick0  /dev/mapper/scratch-brick0:/var/glfs/scratch/brick0
 ```
 
-# Host storage setup
+# Host storage setup - within the chroot in container
 * initialize PVs, create VG and LV per-pool, format the bricks, and mount
 ```
 pvcreate /dev/vdb1
@@ -44,14 +58,20 @@ mkdir /var/glfs/scatch/brick0/brick
 ```
 
 # GFS setup
-## Start the gluster server container and exec into it : Following Gluster setup is in-container
+
+## Start the gluster server container and exec into it 
 ```
-docker exec -it $(docker run --restart=always --net=host --privileged -v /:/hostroot -v /var/bricks:/var/bricks -it ndslabs/gluster) bash
+docker run --restart=always --name=glusterfs --net=host --privileged -v /:/hostroot -v /var/glfs:/var/glfs -d ndslabs/gluster
+docker exec -it glusterfs bash
+# chroot /hostroot
 ```
 
 ## Initialize the cluster FS servers
 ```
-gluster peer probe 172.16.1.162 172.16.1.161 172.16.1.111 ...
+gluster peer probe 172.16.1.161
+gluster peer probe 172.16.1.162 
+gluster peer probe 172.16.1.163 
+  ...
 ```
 
 ## Create the Gluster volumes per pool
@@ -106,3 +126,7 @@ mount -t glusterfs 172.16.1.163:/scratch /hostroot/scratch
 * All nodes need KUBE_ALLOW_PRIV="--allow-privileged=true" in /etc/kubernetes/config
 * Run as a Daemon Set, see <http://kubernetes.io/docs/admin/daemons>
 * Quick-start templates:  <https://github.com/wattsteve>
+
+## Temporary pending documentation update:
+SC run:  docker run --net=host --pid=host --privileged  -v /dev:/dev  -v /var:/var -v /run:/run -v /:/media/host -it  ndslabs/gluster bash
+
