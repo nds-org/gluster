@@ -12,11 +12,9 @@ spec:
     spec:
       nodeSelector:
         ndslabs-role: storage
-      securityContext:
-        privileged: true
       # Do we need either of these?
-      # hostPID: true
-      # hostIPC: true
+      hostPID: true
+      hostIPC: true
       hostNetwork: true
       containers:
         - image: ndslabs/gluster
@@ -26,6 +24,8 @@ spec:
               mountPath: /hostroot
             - name: glfs
               mountPath: /var/glfs
+          securityContext:
+            privileged: true
       volumes:
         - name: hostroot
           hostPath:

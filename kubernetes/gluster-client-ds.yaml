@@ -12,8 +12,6 @@ spec:
     spec:
       nodeSelector:
         ndslabs-role: compute
-      securityContext:
-        privileged: true
       # Do we need either of these?
       # hostPID: true
       # hostIPC: true
@@ -21,13 +19,13 @@ spec:
       containers:
         - image: ndslabs/gluster
           name: glusterfs-client
+          securityContext:
+            privileged: true
           volumeMounts:
             - name: hostroot
               mountPath: /hostroot
             - name: glfs
               mountPath: /var/glfs
-#        - name: glfs-config
-#          mountPath: /etc/kube-gluster
       volumes:
         - name: hostroot
           hostPath:
