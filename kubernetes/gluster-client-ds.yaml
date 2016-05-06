@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: glusterfs-client
+  labels:
+    app: glusterfs-client
+spec:
+  template:
+    metadata:
+      labels:
+        name: glusterfs-client
+    spec:
+      nodeSelector:
+        ndslabs-role: compute
+      securityContext:
+        privileged: true
+      # Do we need either of these?
+      # hostPID: true
+      # hostIPC: true
+      hostNetwork: true
+      containers:
+        - image: ndslabs/gluster
+          name: glusterfs-client
+          volumeMounts:
+            - name: hostroot
+              mountPath: /hostroot
+            - name: glfs
+              mountPath: /var/glfs
+#        - name: glfs-config
+#          mountPath: /etc/kube-gluster
+      volumes:
+        - name: hostroot
+          hostPath:
+              path: /
+        - name: glfs
+          hostPath:
+              path: /var/glfs

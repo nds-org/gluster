@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: glusterfs-server
+  labels:
+    app: glusterfs-server
+spec:
+  template:
+    metadata:
+      labels:
+        name: glusterfs-server
+    spec:
+      nodeSelector:
+        ndslabs-role: storage
+      securityContext:
+        privileged: true
+      # Do we need either of these?
+      # hostPID: true
+      # hostIPC: true
+      hostNetwork: true
+      containers:
+        - image: ndslabs/gluster
+          name: glusterfs-server
+          volumeMounts:
+            - name: hostroot
+              mountPath: /hostroot
+            - name: glfs
+              mountPath: /var/glfs
+      volumes:
+        - name: hostroot
+          hostPath:
+              path: /
+        - name: glfs
+          hostPath:
+              path: /var/glfs
