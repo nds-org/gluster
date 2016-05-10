@@ -1,18 +1,31 @@
 #!/bin/sh
 #
-# Usage: ./client <glfs server ip>
+# Usage: ./client [glfs server ip] [-D]
+#
+# -D : dry-run (print commands, but don't run them)
 #
 
-if [[ "$1" == "" ]]; then
-	$1="192.168.100.89"
+# Figure out our target glfs server ip
+if [[ "$1" == "" || "$1" == "-D" ]]; then
+	HOST="192.168.100.89"
+else
+	HOST=$1
+fi
+
+# If -D specified, prepend ALL commands with "echo"
+DEBUG=""
+if [[ "${@/-D/ }" != "$@" ]]; then
+        DEBUG="echo"
 fi
 
 VOLNAME=ndslabs
-DEST="/hostroot/var/glfs/ndslabs"
+DEST="/var/glfs/$VOLNAME"
 
 # Create the directory if it does not already exist
-mkdir -p $DEST
+$DEBUG mkdir -p $DEST
 
 # Mount the NDS Labs Gluster volume on the host
 # This will make the volume available to be mapped into K8
-mount -t glusterfs $1:/$VOLNAME $DEST
+$DEBUG mount -t glusterfs $HOST:/$VOLNAME $DEST
+
+echo GlusterFS client started
