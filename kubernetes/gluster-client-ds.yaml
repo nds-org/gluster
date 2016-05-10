@@ -17,8 +17,10 @@ spec:
       # hostIPC: true
       hostNetwork: true
       containers:
-        - image: ndslabs/gluster
+        - image: ndslabs/gluster:test
           name: glusterfs-client
+          command:
+            - "client"
           securityContext:
             privileged: true
           volumeMounts:
