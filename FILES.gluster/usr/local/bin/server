@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Usage: ./server <my-ip> <peer1 ip> <peer2 ip> ...
+#
+
+DEBUG="echo"
+
+HOST=$1
+
+echo Starting GlusterFS server on $HOST
+
+# Grab peer ips from args
+PEERS=(${@/$1/ })
+
+echo Connecting to peers: ${PEERS[@]}
+
+# Start supervisord to keep glusterd running
+$DEBUG /usr/bin/supervisord
+
+# Probe any existing peers
+for i in "${PEERS[@]}"; do
+	$DEBUG gluster peer probe $i
+done
+
+# Create necessary volume if it doesn't exist
+$DEBUG mkdir -p /var/glfs/ndslabs/brick0
+$DEBUG gluster volume create ndslabs transport tcp 192.168.100.89:/var/glfs/ndslabs/brick0
+$DEBUG gluster volume start ndslabs

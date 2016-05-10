@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Usage: ./client <glfs server ip>
+#
+
+if [[ "$1" == "" ]]; then
+	$1="192.168.100.89"
+fi
+
+mkdir -p /var/glfs/ndslabs
+mount -t glusterfs $1:/ndslabs /var/glfs/ndslabs
