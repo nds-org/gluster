@@ -20,7 +20,9 @@ spec:
         - image: ndslabs/gluster:test
           name: glusterfs-client
           command:
-            - "client 192.168.100.89"
+            - client
+          args:
+            - "192.168.100.89"
           securityContext:
             privileged: true
           volumeMounts:
