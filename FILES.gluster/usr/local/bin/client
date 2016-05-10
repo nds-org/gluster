@@ -1,16 +1,9 @@
 #!/bin/sh
 #
-# Usage: ./client [glfs server ip] [-D]
+# Usage: ./client [-D]
 #
 # -D : dry-run (print commands, but don't run them)
 #
-
-# Figure out our target glfs server ip
-if [[ "$1" == "" || "$1" == "-D" ]]; then
-	HOST="192.168.100.89"
-else
-	HOST=$1
-fi
 
 # If -D specified, prepend ALL commands with "echo"
 DEBUG=""
@@ -18,6 +11,7 @@ if [[ "${@/-D/ }" != "$@" ]]; then
         DEBUG="echo"
 fi
 
+HOST="192.168.100.89"
 VOLNAME=ndslabs
 DEST="/var/glfs/$VOLNAME"
 
