@@ -7,5 +7,12 @@ if [[ "$1" == "" ]]; then
 	$1="192.168.100.89"
 fi
 
-mkdir -p /var/glfs/ndslabs
-mount -t glusterfs $1:/ndslabs /var/glfs/ndslabs
+VOLNAME=ndslabs
+DEST="/hostroot/var/glfs/ndslabs"
+
+# Create the directory if it does not already exist
+mkdir -p $DEST
+
+# Mount the NDS Labs Gluster volume on the host
+# This will make the volume available to be mapped into K8
+mount -t glusterfs $1:/$VOLNAME $DEST
