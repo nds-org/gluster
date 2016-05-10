@@ -1,25 +1,17 @@
 #!/bin/sh
 #
-# Usage: ./client [-D]
+# Usage: ./client
 #
-# -D : dry-run (print commands, but don't run them)
-#
-
-# If -D specified, prepend ALL commands with "echo"
-DEBUG=""
-if [[ "${@/-D/ }" != "$@" ]]; then
-        DEBUG="echo"
-fi
 
 HOST="192.168.100.89"
 VOLNAME=ndslabs
 DEST="/var/glfs/$VOLNAME"
 
 # Create the directory if it does not already exist
-$DEBUG mkdir -p $DEST
+mkdir -p $DEST
 
 # Mount the NDS Labs Gluster volume on the host
 # This will make the volume available to be mapped into K8
-$DEBUG mount -t glusterfs $HOST:/$VOLNAME $DEST
+mount -t glusterfs $HOST:/$VOLNAME $DEST
 
 echo GlusterFS client started
