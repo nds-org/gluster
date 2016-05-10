@@ -9,7 +9,7 @@ HOST=$1
 VOLNAME=ndslabs
 BRKPATH=/var/glfs/$VOLNAME/brick0
 
-DEBUG="echo"
+# DEBUG="echo"
 
 echo Starting GlusterFS server on $HOST
 

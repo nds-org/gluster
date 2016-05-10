@@ -7,6 +7,9 @@ HOST="192.168.100.89"
 VOLNAME="ndslabs"
 DEST="/hostroot/var/glfs/$VOLNAME"
 
+# Start the gluster daemon
+/usr/bin/supervisord
+
 # Create the directory if it does not already exist
 echo mkdir -p $DEST
 mkdir -p $DEST
