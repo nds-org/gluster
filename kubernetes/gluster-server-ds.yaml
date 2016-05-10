@@ -18,9 +18,10 @@ spec:
       hostNetwork: true
       containers:
         - image: ndslabs/gluster:test
+          imagePullPolicy: Always
           name: glusterfs-server
           command:
-            - "server"
+            - server
           securityContext:
             privileged: true
           volumeMounts:

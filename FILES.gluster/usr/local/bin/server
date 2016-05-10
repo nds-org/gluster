@@ -17,7 +17,7 @@ echo Starting GlusterFS server on $HOST
 $DEBUG /usr/bin/supervisord
 
 # Create necessary volume if it doesn't exist
-if [[ -d "$BRKPATH" ]]; then
+if [ ! -d "$BRKPATH" ]; then
 	echo Creating volume: $BRKPATH
 
 	$DEBUG mkdir -p $BRKPATH
