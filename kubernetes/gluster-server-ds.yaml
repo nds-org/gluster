@@ -19,13 +19,13 @@ spec:
       containers:
         - image: ndslabs/gluster
           name: glusterfs-server
+          securityContext:
+            privileged: true
           volumeMounts:
             - name: hostroot
               mountPath: /hostroot
             - name: glfs
               mountPath: /var/glfs
-          securityContext:
-            privileged: true
       volumes:
         - name: hostroot
           hostPath:
