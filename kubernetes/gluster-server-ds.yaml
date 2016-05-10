@@ -20,8 +20,6 @@ spec:
         - image: ndslabs/gluster:test
           imagePullPolicy: Always
           name: glusterfs-server
-          command:
-            - server
           securityContext:
             privileged: true
           volumeMounts:

@@ -14,5 +14,4 @@ RUN apt-get update && \
 
 ADD FILES.gluster /
 
-CMD usage
-# /usr/bin/supervisord
+CMD /usr/bin/supervisord
