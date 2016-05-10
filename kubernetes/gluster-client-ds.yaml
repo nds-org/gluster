@@ -18,6 +18,7 @@ spec:
       hostNetwork: true
       containers:
         - image: ndslabs/gluster:test
+          imagePullPolicy: Always
           name: glusterfs-client
           command:
             - client
