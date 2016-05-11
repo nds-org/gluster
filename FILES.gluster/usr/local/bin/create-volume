@@ -3,8 +3,6 @@
 # Usage: sh create-volume
 #
 
-DEBUG="echo"
-
 HOSTS=(192.168.100.89 192.168.100.156)
 
 VOLNAME="ndslabs"
