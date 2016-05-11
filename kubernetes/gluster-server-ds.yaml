@@ -12,7 +12,6 @@ spec:
     spec:
       nodeSelector:
         ndslabs-role: storage
-      # Do we need either of these?
       hostPID: true
       hostIPC: true
       hostNetwork: true

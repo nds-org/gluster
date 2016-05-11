@@ -12,9 +12,8 @@ spec:
     spec:
       nodeSelector:
         ndslabs-role: compute
-      # Do we need either of these?
-      # hostPID: true
-      # hostIPC: true
+      hostPID: true
+      hostIPC: true
       hostNetwork: true
       containers:
         - image: ndslabs/gluster:test
