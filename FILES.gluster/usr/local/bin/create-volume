@@ -15,7 +15,7 @@ EXISTS="No volumes present in cluster"
 if [[ "$EXISTS" == "No volumes present in cluster" ]]; then
 	# Remove existing data (stale bricks)
 	if [[ -d "$VOLPATH" ]]; then
-		$DEBUG sudo rm -rf "$VOLPATH"
+		$DEBUG rm -rf "$VOLPATH"
 		$DEBUG mkdir -p "$VOLPATH"
 	fi
 
