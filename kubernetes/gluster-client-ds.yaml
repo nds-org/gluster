@@ -27,8 +27,8 @@ spec:
             - name: hostroot
               mountPath: /media/host
 #              readOnly: true
-            - name: glfs
-              mountPath: /var/glfs
+            - name: var
+              mountPath: /var
             - name: run
               mountPath: /run
             - name: dev
@@ -37,9 +37,9 @@ spec:
         - name: hostroot
           hostPath:
               path: /
-        - name: glfs
+        - name: var
           hostPath:
-              path: /var/glfs
+              path: /var
         - name: run
           hostPath:
               path: /run
