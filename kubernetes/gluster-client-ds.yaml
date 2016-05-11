@@ -26,11 +26,11 @@ spec:
           volumeMounts:
             - name: hostroot
               mountPath: /hostroot
+              readOnly: true
             - name: glfs
               mountPath: /var/glfs
       volumes:
         - name: hostroot
-          readOnly: true
           hostPath:
               path: /
         - name: glfs
