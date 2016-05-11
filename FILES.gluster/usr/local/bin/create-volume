@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Usage: sh create-volume
 #
+
+DEBUG="echo"
 
 HOSTS=(192.168.100.89 192.168.100.156)
 
@@ -9,24 +11,25 @@ VOLNAME="ndslabs"
 VOLPATH="/var/glfs/$VOLNAME"
 BRKPATH="$VOLPATH/brick0"
 
-EXISTS=`gluster volume list | grep "$VOLNAME"`
+#EXISTS=`gluster volume list | grep "$VOLNAME"`
+EXISTS="No volumes present in cluster"
 
 if [[ "$EXISTS" == "No volumes present in cluster" ]]; then
 	# Remove existing data (stale bricks)
 	if [[ -d "$VOLPATH" ]]; then
-		sudo rm -rf "$VOLPATH"
-		mkdir -p "$VOLPATH"
+		$DEBUG sudo rm -rf "$VOLPATH"
+		$DEBUG mkdir -p "$VOLPATH"
 	fi
 
 	BRICKS=""
-	for i in "$HOSTS[@]"; do
+	for i in "${HOSTS[@]}"; do
 		BRICKS="$i:$BRKPATH $BRICKS"
 	done
 
 	# Create a new gluster volume 
-	gluster volume create $VOLNAME transport tcp $BRICKS
+	$DEBUG gluster volume create $VOLNAME transport tcp $BRICKS
 
 	# Start serving the new volume
-	gluster volume start $VOLNAME
+	$DEBUG gluster volume start $VOLNAME
 fi
 
