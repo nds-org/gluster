@@ -1,13 +1,14 @@
 #!/bin/sh
 #
-# Usage: ./client <server>:<volume> </path-to-mount>
+# Usage: ./client <GLFSVOL> <MOUNTPATH>
+#
+# Mounts using user-space glfs into the hosts namespace, mounted on /media/host/1/ns/mnt
+# You will not see the mount in the continer if running properly as a supercontainer.
 #
 
-#
-# Note, client mounts into the host namespace, host path must exist
-
-mkdir $2 || true
-chmod 777 $2 || true
-mount -t glusterfs $1 $2
-
+HDIR=${2}
+mkdir -p -m 0777 ${HDIR} || true
+mount -t glusterfs -o log-file=/dev/stdout ${1} ${2} 
 sleep infinity
+echo "gluster client exiting"
+chroot /media/host umount -f ${2}
