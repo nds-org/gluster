@@ -5,7 +5,7 @@
 # Called as client, but does a cleanup before exit
 #
 
-echo "glfs client shutting down, umount host FS"
+echo "glfs client cleanup, umount host FS"
 chroot /media/host nsenter --mount=/proc/1/ns/mnt umount -f ${2}
-echo "shutdown done, exiting"
+echo "umount done"
 

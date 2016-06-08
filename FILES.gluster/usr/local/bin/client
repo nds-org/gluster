@@ -8,6 +8,7 @@
 
 HDIR=${2}
 mkdir -p -m 0777 ${HDIR} || true
+ls ${HDIR} || cleanup ${1} ${2}
 
 function shut_down() {
     echo "caught signal, calling cleanup"
