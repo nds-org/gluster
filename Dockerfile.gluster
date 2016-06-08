@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:xenial
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -8,10 +8,10 @@ RUN apt-get update && \
     apt-get -y install glusterfs-server glusterfs-client &&\
     apt-get -y install xfsprogs &&\
     apt-get -y install lvm2 &&\
+    apt-get -y install inotify-tools &&\
     apt-get -y install supervisor &&\
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD FILES.gluster /
 
-CMD /usr/bin/supervisord
