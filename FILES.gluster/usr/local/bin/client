@@ -4,7 +4,17 @@
 #
 HDIR=${2}
 mkdir -p -m 0777 ${HDIR} || true
+
+function shut_down() {
+    echo shutting down
+
+    chroot /media/host umount -f ${2}
+    exit
+}
+
+trap "shut_down" SIGKILL SIGTERM SIGHUP SIGINT EXIT
+
 mount -t glusterfs -o log-file=/dev/stdout ${1} ${2} 
 sleep infinity
 echo "gluster client exiting"
-chroot /media/host umount -f ${2}
+shut_down
