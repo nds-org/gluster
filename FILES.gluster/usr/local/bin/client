@@ -1,24 +1,10 @@
 #!/bin/sh
 #
-# Usage: ./client
+# Usage: ./client <GLFSVOL> <MOUNTPATH>
 #
-
-HOST="192.168.100.89"
-VOLNAME="ndslabs"
-DEST="/var/glfs/$VOLNAME"
-
-# Start the gluster daemon
-/usr/sbin/glusterd
-
-# Create the directory if it does not already exist
-echo mkdir -p $DEST
-mkdir -p $DEST
-
-# Mount the NDS Labs Gluster volume on the host
-# This will make the volume available to be mapped into K8
-echo mount -t glusterfs $HOST:/$VOLNAME $DEST
-mount -t glusterfs $HOST:/$VOLNAME $DEST
-
-echo GlusterFS client started
-
+HDIR=${2}
+mkdir -p -m 0777 ${HDIR} || true
+mount -t glusterfs -o log-file=/dev/stdout ${1} ${2} 
 sleep infinity
+echo "gluster client exiting"
+chroot /media/host umount -f ${2}
