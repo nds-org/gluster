@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Usage: ./client <GLFSVOL> <MOUNTPATH>
 #
@@ -10,9 +10,8 @@ HDIR=${2}
 mkdir -p -m 0777 ${HDIR} || true
 
 function shut_down() {
-    echo shutting down
-
-    chroot /media/host umount -f ${2}
+    echo "caught signal, calling cleanup"
+    cleanup ${1} ${2}
     exit
 }
 
@@ -20,5 +19,5 @@ trap "shut_down" SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
 mount -t glusterfs -o log-file=/dev/stdout ${1} ${2} 
 sleep infinity
-echo "gluster client exiting"
-shut_down
+echo "gluster client exiting, calling cleanup"
+cleanup ${1} ${2}
