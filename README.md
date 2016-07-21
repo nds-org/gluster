@@ -15,8 +15,7 @@ docker run --rm -it ndslabs/gluster usage
 * **client** - Consult usage or see below
 *  
 * Author/Maintainer:  raila@illinois.edu
-```--cap-add SYS_ADMIN --device /dev/fuse
-```
+```--cap-add SYS_ADMIN --device /dev/fuse```
 
 
 ## Prerequisites
