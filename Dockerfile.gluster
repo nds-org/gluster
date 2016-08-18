@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:16.10
 
 RUN apt-get update && \
     apt-get install -y apt-utils python-software-properties software-properties-common && \
@@ -7,8 +7,10 @@ RUN apt-get update && \
     apt-get -y install host curl net-tools lsof &&\
     apt-get -y install glusterfs-server glusterfs-client attr &&\
     apt-get -y install xfsprogs &&\
+    apt-get -y install build-essential &&\
     apt-get -y install lvm2 &&\
     apt-get -y install inotify-tools &&\
+    apt-get -y install supervisor &&\
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
     mv /var/lib/glusterd /var/lib/glusterd.stock &&\
@@ -18,6 +20,3 @@ RUN apt-get update && \
 ADD FILES.gluster /
 
 EXPOSE 24007 24008 49152 49153 49154 49155 49156 49157 49158 49159 49160
-
-
-

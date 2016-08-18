@@ -17,6 +17,7 @@
 #include <errno.h>
 #include <syslog.h>
 #include <string.h>
+#include <features.h>
 
 /* Copied from sys-utils/nsenter.c */
 static int open_target_fd(int *fd, const char *path)

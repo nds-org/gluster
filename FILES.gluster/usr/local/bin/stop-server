@@ -3,7 +3,7 @@
 [ $DEBUG ] && set -x
 
 echo "glfs stop-server, stop vol"
-kill $(cat /glrunning)
+kill $(cat /glrunning) || true
 pkill glusterd
 
 
