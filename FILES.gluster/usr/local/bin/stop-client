@@ -1,0 +1,9 @@
+#!/bin/bash
+. /etc/glconfig/glfs-config-global
+[ $DEBUG ] && set -x
+
+echo "glfs stop-client, umount host FS"
+nsenter --mount=/media/host/proc/1/ns/mnt umount -f ${VOLPATH}
+kill $(cat /glrunning)
+echo "umount done"
+

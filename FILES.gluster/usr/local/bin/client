@@ -1,24 +1,15 @@
 #!/bin/bash
-#
-# Usage: ./client <GLFSVOL> <MOUNTPATH>
-#
-# Mounts using user-space glfs into the hosts namespace, mounted on /media/host/1/ns/mnt
-# You will not see the mount in the continer if running properly as a supercontainer.
-#
-
-HDIR=${2}
-mkdir -p -m 0777 ${HDIR} || true
-ls ${HDIR} || cleanup ${1} ${2}
-
-function shut_down() {
-    echo "caught signal, calling cleanup"
-    cleanup ${1} ${2}
-    exit
-}
-
-trap "shut_down" SIGKILL SIGTERM SIGHUP SIGINT EXIT
-
-mount -t glusterfs -o log-file=/dev/stdout ${1} ${2} 
+. /etc/glconfig/glfs-config-global
+[ $DEBUG ] && set -x  
+trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
+  
+# cleanup any leftovers from the past
+stop-client
+echo $$ > /glrunning
+mkdir -p -m 0777 ${VOLPATH} || true
+eval PARRAY=(${PEERS})
+mount -t glusterfs -o log-file=/dev/stdout ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
+nsenter --mount=/media/host/proc/1/ns/mnt mount --make-shared ${VOLPATH}
+echo $$ > /glready
 sleep infinity
-echo "gluster client exiting, calling cleanup"
-cleanup ${1} ${2}
+echo "gluster client exiting, stop-client"
