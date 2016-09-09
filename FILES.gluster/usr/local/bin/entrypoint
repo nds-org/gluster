@@ -1,0 +1,8 @@
+#!/bin/bash
+. /etc/glconfig/glfs-config-global
+[ $DEBUG ] && set -x
+
+for f in /etc/glusterfs /var/log/glusterfs /var/lib/glusterd; do
+    [[ $(ls ${f} | wc -l) -gt 0 ]] || (cd ${f}.stock && cp -rp * ${f})
+    done
+$@

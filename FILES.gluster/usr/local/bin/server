@@ -1,0 +1,12 @@
+#!/bin/bash
+. /etc/glconfig/glfs-config-global
+[ $DEBUG ] && set -x
+echo $$ > /glrunning
+
+/usr/sbin/glusterd --log-file=/dev/stdout
+sleep 5 # let cluster come up
+echo $$ > /glready
+sleep infinity
+echo "gluster server exiting, stop-server"
+stop-server
+
