@@ -6,7 +6,7 @@ echo $$ > /glrunning
 /usr/sbin/glusterd --log-file=/dev/stdout
 sleep 5 # let cluster come up
 echo $$ > /glready
-sleep infinity
+tail -f /var/log/glusterfs/glustershd.log
 echo "gluster server exiting, stop-server"
 stop-server
 
