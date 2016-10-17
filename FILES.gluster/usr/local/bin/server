@@ -3,7 +3,7 @@
 [ $DEBUG ] && set -x
 echo $$ > /glrunning
 touch /var/log/glusterfs/glustershd.log
-/usr/sbin/glusterd
+/usr/sbin/glusterd --log-file=/dev/stdout
 sleep 5 # let cluster come up
 echo $$ > /glready
 tail -f /var/log/glusterfs/glustershd.log
