@@ -2,8 +2,8 @@
 . /etc/glconfig/glfs-config-global
 [ $DEBUG ] && set -x
 echo $$ > /glrunning
-touch /var/log/glusterfs/glustershd.log
-/usr/sbin/glusterd --log-file=/dev/stdout
+touch /var/log/glusterfs/glustershd.log || true
+/usr/sbin/glusterd
 sleep 5 # let cluster come up
 echo $$ > /glready
 tail -f /var/log/glusterfs/glustershd.log

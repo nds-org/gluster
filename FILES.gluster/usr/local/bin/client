@@ -4,12 +4,12 @@
 trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
 # cleanup any leftovers from the past
-touch /var/log/glusterfs/glustershd.log
+touch /var/log/glusterfs/glustershd.log || true
 stop-client
 echo $$ > /glrunning
 mkdir -p -m 0777 ${VOLPATH} || true
 eval PARRAY=(${PEERS})
-mount -t glusterfs -o backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} -o log-file=/dev/stdout ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
+mount -t glusterfs -o backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} -o ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
 #nsenter --mount=/media/host/proc/1/ns/mnt mount --make-shared ${VOLPATH}
 echo $$ > /glready
 tail -f /var/log/glusterfs/glustershd.log
