@@ -6,7 +6,7 @@ touch /var/log/glusterfs/glustershd.log || true
 /usr/sbin/glusterd
 sleep 5 # let cluster come up
 echo $$ > /glready
-tail -f /var/log/glusterfs/glustershd.log
+tail -f /var/log/glusterfs/*.log
 echo "gluster server exiting, stop-server"
 stop-server
 
