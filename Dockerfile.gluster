@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:16.10
 
 RUN apt-get update && \
     apt-get install -y apt-utils python-software-properties software-properties-common && \
@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get -y install host curl net-tools lsof &&\
     apt-get -y install glusterfs-server glusterfs-client attr &&\
     apt-get -y install xfsprogs &&\
+    apt-get -y install build-essential &&\
     apt-get -y install lvm2 &&\
     apt-get -y install inotify-tools &&\
     apt-get -y clean all && \
