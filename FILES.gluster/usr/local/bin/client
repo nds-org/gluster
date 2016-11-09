@@ -2,7 +2,7 @@
 . /etc/glconfig/glfs-config-global
 [ $DEBUG ] && set -x  
 trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
-[ -f /usr/local/lib/glustermount ] || /usr/local/bin/install-dso
+[ -f /usr/local/lib/glustermount.so ] || /usr/local/bin/install-dso
 
 # cleanup any leftovers from the past
 stop-client
