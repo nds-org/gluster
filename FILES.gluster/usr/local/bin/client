@@ -1,15 +1,18 @@
 #!/bin/bash
 . /etc/glconfig/glfs-config-global
 [ $DEBUG ] && set -x  
-trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
-  
+#trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
+
 # cleanup any leftovers from the past
 stop-client
 echo $$ > /glrunning
 mkdir -p -m 0777 ${VOLPATH} || true
 eval PARRAY=(${PEERS})
-mount -t glusterfs -o log-file=/dev/stdout ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
-nsenter --mount=/media/host/proc/1/ns/mnt mount --make-shared ${VOLPATH}
+#mount  -t nfs -o nolock,vers=3 ${PARRAY[3]}:${VOLNAME} ${VOLPATH}
+#mount -t glusterfs -o acl -o capability -o direct-io-mode=enable -o backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
+mount -t glusterfs -o acl,direct-io-mode=disable,backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
+
+#nsenter --mount=/media/host/proc/1/ns/mnt mount --make-shared ${VOLPATH}
 echo $$ > /glready
-sleep infinity
+tail -f /var/log/glusterfs/*.log
 echo "gluster client exiting, stop-client"

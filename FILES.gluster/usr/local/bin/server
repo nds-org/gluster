@@ -2,11 +2,11 @@
 . /etc/glconfig/glfs-config-global
 [ $DEBUG ] && set -x
 echo $$ > /glrunning
-
-/usr/sbin/glusterd --log-file=/dev/stdout
+touch /var/log/glusterfs/glustershd.log || true
+/usr/sbin/glusterd
 sleep 5 # let cluster come up
 echo $$ > /glready
-sleep infinity
+tail -f /var/log/glusterfs/*.log
 echo "gluster server exiting, stop-server"
 stop-server
 
