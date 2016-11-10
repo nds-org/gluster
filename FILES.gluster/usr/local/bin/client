@@ -8,9 +8,9 @@ stop-client
 echo $$ > /glrunning
 mkdir -p -m 0777 ${VOLPATH} || true
 eval PARRAY=(${PEERS})
-#mount  -t nfs -o vers=3 ${PARRAY[0]},${PARRAY[1]},${PARRAY[2]},${PARRAY[3]}:${VOLNAME} ${VOLPATH}
+mount  -t nfs -o vers=3 ${PARRAY[0]},${PARRAY[1]},${PARRAY[2]},${PARRAY[3]}:${VOLNAME} ${VOLPATH}
 #mount -t glusterfs -o acl -o capability -o direct-io-mode=enable -o backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
-mount -t glusterfs -o acl -o direct-io-mode=enable -o backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
+#mount -t glusterfs -o acl -o direct-io-mode=enable -o backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
 
 #nsenter --mount=/media/host/proc/1/ns/mnt mount --make-shared ${VOLPATH}
 echo $$ > /glready
