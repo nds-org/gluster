@@ -1,7 +1,7 @@
 #!/bin/bash
 . /etc/glconfig/glfs-config-global
 [ $DEBUG ] && set -x  
-trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
+#trap "stop-client" SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
 # cleanup any leftovers from the past
 stop-client
