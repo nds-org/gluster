@@ -19,3 +19,9 @@ RUN apt-get update && \
 ADD FILES.gluster /
 
 EXPOSE 24007 24008 49152 49153 49154 49155 49156 49157 49158 49159 49160
+<<<<<<< 829c45f84999a158008badecf51acc48c34de256
+
+
+
+=======
+>>>>>>> gitignore
