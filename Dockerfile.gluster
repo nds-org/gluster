@@ -2,7 +2,7 @@ FROM ubuntu:16.10
 
 RUN apt-get update && \
     apt-get install -y apt-utils python-software-properties software-properties-common && \
-    add-apt-repository ppa:gluster/glusterfs-3.8 &&\
+    add-apt-repository ppa:gluster/glusterfs-3.9 &&\
     apt-get -y update && apt-get -y dist-upgrade &&\
     apt-get -y install host curl net-tools lsof &&\
     apt-get -y install glusterfs-server glusterfs-client attr &&\

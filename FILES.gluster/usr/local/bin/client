@@ -11,5 +11,10 @@ eval PARRAY=(${PEERS})
 mount -t glusterfs -o acl,direct-io-mode=disable,backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
 
 echo $$ > /glready
+
+# Start monitoring the mount, fail readiness and exit container if mountpoint fails
+# Let k8s restart it
+/usr/local/bin/client-monitormount &
+
 tail -f /var/log/glusterfs/*.log
 echo "gluster client exiting, stop-client"

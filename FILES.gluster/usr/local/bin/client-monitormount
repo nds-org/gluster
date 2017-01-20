@@ -1,0 +1,11 @@
+#!/bin/bash
+. /etc/glconfig/glfs-config-global
+[ $DEBUG ] && set -x  
+
+while nsenter --mount=/media/host/proc/1/ns/mnt df -T ${VOLPATH} | tail -n+2 | grep glusterfs; do
+  sleep 5;
+done
+echo "mount is stale"
+rm -f /glready
+stop-client
+exit -1
