@@ -2,7 +2,7 @@
 . /etc/glconfig/glfs-config-global
 [ $DEBUG ] && set -x  
 
-while nsenter --mount=/media/host/proc/1/ns/mnt mountpoint -f ${VOLPATH}; do
+while nsenter --mount=/media/host/proc/1/ns/mnt mountpoint ${VOLPATH}; do
   sleep 10
 done
 echo "mount is stale"
