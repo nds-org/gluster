@@ -3,7 +3,7 @@
 [ $DEBUG ] && set -x
 
 echo "glfs stop-client, umount host FS"
-nsenter --mount=/media/host/proc/1/ns/mnt umount -f ${VOLPATH}
+nsenter --mount=/media/host/proc/1/ns/mnt fusermount -u ${VOLPATH}
 kill $(cat /glrunning) || true
 echo "umount done"
 
