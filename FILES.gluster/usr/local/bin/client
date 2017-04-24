@@ -8,7 +8,17 @@ echo $$ > /glrunning
 mkdir -p -m 0777 ${VOLPATH} || true
 eval PARRAY=(${PEERS})
 
-mount -t glusterfs -o acl,direct-io-mode=disable,backup-volfile-servers=${PARRAY[3]}:${PARRAY[1]}:${PARRAY[2]} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
+eval PARRAY=(${PEERS})
+
+SERVERS=""
+for (( i=1; i< ${#PARRAY[@]}; i++ )); do
+  if (( i > 1 )); then
+     SERVERS+=":"
+  fi
+  SERVERS+=${PARRAY[$i]}
+done
+
+mount -t glusterfs -o acl,direct-io-mode=disable,backup-volfile-servers=${SERVERS} ${PARRAY[0]}:${VOLNAME} ${VOLPATH}
 
 echo $$ > /glready
 
