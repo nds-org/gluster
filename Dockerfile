@@ -1,4 +1,4 @@
-FROM ubuntu:16.10
+FROM ubuntu:xenial
 
 RUN apt-get update && \
     apt-get install -y apt-utils python-software-properties software-properties-common && \
